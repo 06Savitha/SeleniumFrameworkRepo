@@ -1,0 +1,15 @@
+After complete the task .. the task state is editable 
+Type of Due Diligence - should be differ in case creation form and Validate IRA Task
+
+
+1.The Priority default is Low 
+2.Assigned To is empty Except Case Initiation task 
+3.Case Initiation Task - Short description field - > Search icon 
+4.Short description is Editable After completed the task 
+5.What is the use of  1 to 11 of 11 arrow
+6.Use of taks tab search box
+7.once case created whether we can change the all mandatory field in Mani stage 
+	
+
+
+44753
