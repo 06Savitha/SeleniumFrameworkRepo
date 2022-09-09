@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 
 import config.PropertiesFile;
 
-public class EscalationTask extends CaseCreation {
+public class EscalationTask extends AccentureLegalCore {
 	public EscalationTask(WebDriver driver) {// initialize objects and no void method and return type -constructor
 		this.driver = driver;
 	}

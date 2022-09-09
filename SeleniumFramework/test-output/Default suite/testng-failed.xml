@@ -5,10 +5,12 @@
     <classes>
       <class name="ALCore.CaseCreation">
         <methods>
+          <include name="IDVTaskCreationAndEscalationTaskTrigger"/>
           <include name="screeningTaskTiggerAndTpaRequestViaPortal"/>
           <include name="SummaryTaskAndReviewsSelect"/>
           <include name="loginSetup"/>
           <include name="IDVAndScreeningAndSummaryQCRejectPhaseAndApproveQCTask"/>
+          <include name="SMEAndClientSponsorReview"/>
           <include name="IDVEscalationReEscalateAndAccept"/>
           <include name="ScreeningTaskAndSanctionEscalations"/>
         </methods>

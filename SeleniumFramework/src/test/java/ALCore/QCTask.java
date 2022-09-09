@@ -21,7 +21,7 @@ import org.testng.Assert;
 
 import config.PropertiesFile;
 
-public class QCTask extends CaseCreation {
+public class QCTask extends AccentureLegalCore {
 
 	public QCTask(WebDriver driver) {
 		this.driver = driver;
@@ -31,26 +31,24 @@ public class QCTask extends CaseCreation {
 		Actions action = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		WebElement userNameQ = driver.findElement(By.xpath("//input[@name='user_name']"));
-		System.out.println("find element");
+		System.out.println("find element.....");
 		usernameQ = PropertiesFile.getUserNameQ();
 		System.out.println("usernameQ..." + usernameQ);
 		userNameQ.sendKeys(usernameQ);
 		WebElement pwd = driver.findElement(By.id("user_password"));
-		password = PropertiesFile.getPassword();
+		password = PropertiesFile.getPasswordQ();
 		pwd.sendKeys(password);
 		WebElement login = driver.findElement(By.id("sysverb_login"));
 		login.click();
 		WebElement favorites = driver.findElement(By.xpath("//body/div[5]/div/div/nav/div/div[2]/div/div/a[2]"));
 		action.moveToElement(favorites).click().perform();
-		js.executeScript("window.scrollBy(0,1000)");
 		Thread.sleep(2000);
-		WebElement aLCore = driver.findElement(By.xpath(
-				"//div/magellan-favorites-list/ul/li[3]/div/div[1]/a/div[2]/span[contains(text(),'Accenture Legal Core - Accenture Legal Cores')]"));
+		WebElement aLCore = driver.findElement(By
+				.xpath("//div/nav/div/div[3]/div/div/magellan-favorites-list/ul/li[3]/div/ul/li[1]/div/a/div[2]/div"));
 		action.doubleClick(aLCore).perform();
 		driver.switchTo().frame("gsft_main");
-		driver.findElement(By.xpath(
-				"/html/body/div[1]/div[1]/span/div/div[5]/table/tbody/tr/td/div/table/tbody/tr[1]/td[3]/a[@class='linked formlink']"))
-				.click();
+		driver.findElement(By.xpath("//div[5]/table/tbody/tr/td/div/table/tbody/tr[1]/td[3]/a")).click();
+		
 	}
 
 	public void IDVMarkComplete() throws InterruptedException {
@@ -277,9 +275,9 @@ public class QCTask extends CaseCreation {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		driver.findElement(By.xpath("/html/body/div[2]/div[1]/span[10]/span/span[2]")).click();
 		js.executeScript("window.scrollTo(2000,0)");
-		WebElement task = driver
+		WebElement summaryTask = driver
 				.findElement(By.xpath("//div/div[10]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]/a"));
-		js.executeScript("arguments[0].click()", task);
+		js.executeScript("arguments[0].click()", summaryTask);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		WebElement markQC = driver.findElement(By.xpath("//button[text()='Mark For QC'][1]"));
 		markQC.click();
@@ -347,7 +345,25 @@ public class QCTask extends CaseCreation {
 			driver.quit();
 		}
 	}
-
+	public void approveReopenedQCTasks() throws InterruptedException {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		driver.findElement(By.xpath("//div[2]/div[1]/span[4]/span/span[2]")).click();
+		WebElement summaryTask = driver
+				.findElement(By.xpath("//div/div[4]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]/a"));
+		summaryTask.click();
+		Select state = new Select(
+				driver.findElement(By.xpath("//select[@id='x_aukms_accenture_fra_summary_creation.state']")));
+		System.out.println("State..." + state);
+		state.selectByVisibleText("Complete");
+		driver.findElement(By.xpath("//button[@onclick='return gsftSubmit(this);']")).click();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		WebElement qcTask = driver
+				.findElement(By.xpath("//div/div[11]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]/a"));
+		js.executeScript("arguments[0].click()", qcTask);
+		WebElement approve = driver.findElement(By.xpath("//button[contains(text(),'Approve')]"));
+		js.executeScript("arguments[0].click()", approve);
+		driver.close();
+	}
 	public void readOnlyIdvTasks() {
 		WebElement requestNumber = driver
 				.findElement(By.xpath("//*[@id='sys_readonly.x_aukms_accenture_accenture_id_v_tasks.number']"));

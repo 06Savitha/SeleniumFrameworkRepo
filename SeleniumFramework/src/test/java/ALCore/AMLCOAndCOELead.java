@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import config.PropertiesFile;
 
-public class AMLCOAndCOELead extends CaseCreation{
+public class AMLCOAndCOELead extends AccentureLegalCore{
 	public AMLCOAndCOELead(WebDriver driver)
 	{
 		this.driver=driver;

@@ -53,7 +53,7 @@ import com.beust.jcommander.Parameter;
 
 import config.PropertiesFile;
 
-public class CaseCreation {
+public class AccentureLegalCore {
 	// WebDriver driver =null;
 	public static String answer = null;
 	public static String assignedTo = null;
@@ -148,8 +148,8 @@ public class CaseCreation {
 
 	// @Test(dataProviderClass = ReadXLSdata.class, dataProvider = "fcData",priority
 	// = 0, enabled = true, description = "NewCaseCreation")
-	@Test(priority = 0, enabled = true, description = "NewCaseCreationAndCaseInitiation")
-	public void NewCaseCreationAndCaseInitiation() throws InterruptedException, IOException {
+	@Test(priority = 0, enabled = true, description = "NewCaseCreationAndCaseInitiationAndallocation")
+	public void NewCaseCreationAndCaseInitiationAndallocation() throws InterruptedException, IOException {
 		Actions action = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		PortalValidation portal = new PortalValidation(driver);
@@ -408,10 +408,11 @@ public class CaseCreation {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		contact = driver.findElement(By.xpath("//span[2]/span[1]/span[2]"));
 		contact.click();
+		Thread.sleep(10000);
 		ClientSponsorDelegate = driver
 				.findElement(By.xpath("//input[@id='sys_display.x_aukms_accenture_accenture_legal_core.delegate']"));
 		String smeUser = ClientSponsorDelegate.getText();
-		if (!(smeUser.equalsIgnoreCase("AL SME"))) {
+		if (!(smeUser.equalsIgnoreCase("AL SME") || smeUser.equalsIgnoreCase(""))) {
 			ClientSponsorDelegate.clear();
 			ClientSponsorDelegate.sendKeys("AL SME");
 			driver.findElement(By.xpath("//button[contains(text(),'Update')]")).click();
@@ -440,8 +441,8 @@ public class CaseCreation {
 	// Ready
 	// 12. Verify that the user is able to Modify the Type of Due Diligence value
 	// under ID&V task
-	@Test(priority = 1, enabled = true, description = "IDVTaskCreationAndEscalationTaskTrigger")
-	public void IDVTaskCreationAndEscalationTaskTrigger() throws InterruptedException, IOException {
+	@Test(priority = 1, enabled = true, description = "IDVTasksAndEscalationTaskTrigger")
+	public void IDVTasksAndEscalationTaskTrigger() throws InterruptedException, IOException {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		Actions action = new Actions(driver);
 		Random rand = new Random();
@@ -1300,8 +1301,8 @@ public class CaseCreation {
 	// 18. Verify that the user is able to Re-escalate the task
 	// 19. Verify that the user is able to see User Rejected the escalation response
 	// message under Activity Logs
-	@Test(priority = 2, enabled = true, description = "IDVEscalationReEscalateAndAccept")
-	public void IDVEscalationReEscalateAndAccept() throws InterruptedException, IOException {
+	@Test(priority = 2, enabled = true, description = "ReEscalateAndEscalationAccept")
+	public void ReEscalateAndEscalationAccept() throws InterruptedException, IOException {
 		EscalationTask esc = new EscalationTask(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		Actions action = new Actions(driver);
@@ -1374,7 +1375,7 @@ public class CaseCreation {
 		driver.switchTo().window(windowHandlesList.get(0));
 		driver.switchTo().frame("gsft_main");
 		esc.analystUserAccept();
-		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.switchTo().defaultContent();
 		user = driver.findElement(By.xpath("//div/div/header/div[1]/div/div[2]/div/div[2]/div/button"));
 		user.click();
@@ -1382,7 +1383,7 @@ public class CaseCreation {
 		logout.click();
 		esc.sessionExpire();
 		Thread.sleep(10000);
-		//driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		// driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		tl.TeamLeadLogin();
 
 	}
@@ -1405,8 +1406,8 @@ public class CaseCreation {
 	// 72. Verify that the al team lead user is able to approve the additional
 	// escalation task
 
-	@Test(priority = 3, enabled = true, description = "screeningTaskTiggerAndTpaRequestViaPortal")
-	public void screeningTaskTiggerAndTpaRequestViaPortal() throws InterruptedException, IOException {
+	@Test(priority = 3, enabled = true, description = "ScreeningTaskTiggerAndTpaRequestViaPortal")
+	public void ScreeningTaskTiggerAndTpaRequestViaPortal() throws InterruptedException, IOException {
 		ScreeningAndSummaryreation screeingAndsummary = new ScreeningAndSummaryreation(driver);
 		AMLCOAndCOELead lead = new AMLCOAndCOELead(driver);
 		Actions action = new Actions(driver);
@@ -1538,11 +1539,11 @@ public class CaseCreation {
 					By.xpath("//div/div[6]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr[2]/td[3]/a"));
 			screeningResultsPreview.click();
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			WebElement overallPEP = driver
-					.findElement(By.xpath("//*[@id='sys_readonly.x_aukms_accenture_screening_tasks.overall_pep_risk']"));
+			WebElement overallPEP = driver.findElement(
+					By.xpath("//*[@id='sys_readonly.x_aukms_accenture_screening_tasks.overall_pep_risk']"));
 			Assert.assertTrue(overallPEP.getAttribute("readOnly").equals("true"), "Element ReadOnly");
-			WebElement overallReputation = driver
-					.findElement(By.xpath("//*[@id='sys_readonly.x_aukms_accenture_screening_tasks.overall_reputation_risk']"));
+			WebElement overallReputation = driver.findElement(
+					By.xpath("//*[@id='sys_readonly.x_aukms_accenture_screening_tasks.overall_reputation_risk']"));
 			Assert.assertTrue(overallReputation.getAttribute("readOnly").equals("true"), "Element ReadOnly");
 			Select state = new Select(
 					driver.findElement(By.xpath("//select[@name='x_aukms_accenture_screening_tasks.state']")));
@@ -1629,7 +1630,7 @@ public class CaseCreation {
 		login.click();
 		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		portal.requestTPA();
-		//portal.alertMethod();
+		// portal.alertMethod();
 
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		WebElement user = driver.findElement(By.xpath("//div/nav/div[3]/ul[2]/li[1]/a/span[1]/div/div/div"));
@@ -1790,25 +1791,8 @@ public class CaseCreation {
 		// qc.sessionExpire();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.switchTo().frame("gsft_main");
-		WebElement userNameQ = driver.findElement(By.xpath("//input[@name='user_name']"));
-		System.out.println("find element.....");
-		usernameQ = PropertiesFile.getUserNameQ();
-		System.out.println("usernameQ..." + usernameQ);
-		userNameQ.sendKeys(usernameQ);
-		WebElement pwd = driver.findElement(By.id("user_password"));
-		password = PropertiesFile.getPasswordQ();
-		pwd.sendKeys(password);
-		WebElement login = driver.findElement(By.id("sysverb_login"));
-		login.click();
+		qc.qcLogin();
 		// qc.sessionExpire();
-		WebElement favorites = driver.findElement(By.xpath("//body/div[5]/div/div/nav/div/div[2]/div/div/a[2]"));
-		action.moveToElement(favorites).click().perform();
-		Thread.sleep(2000);
-		WebElement aLCore = driver.findElement(By
-				.xpath("//div/nav/div/div[3]/div/div/magellan-favorites-list/ul/li[3]/div/ul/li[1]/div/a/div[2]/div"));
-		action.doubleClick(aLCore).perform();
-		driver.switchTo().frame("gsft_main");
-		driver.findElement(By.xpath("//div[5]/table/tbody/tr/td/div/table/tbody/tr[1]/td[3]/a")).click();
 		driver.findElement(By.xpath("/html/body/div[2]/div[1]/span[11]/span/span[2]")).click();
 		WebElement qcTask = driver
 				.findElement(By.xpath("//div/div[11]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]/a"));
@@ -1906,274 +1890,113 @@ public class CaseCreation {
 		driver.switchTo().window(windowHandlesList.get(0));
 	}
 
-	// 44. Verify that the al qc user is able to change state as QC Ready to In
-	// Progress under Screening
-	// 45. Verify that the user is able to select the Screening task as Rejected
-	// phase
-	// 46. Verify that the user is able to see Screening Task has been Reopened for
-	// QC rejection message
-	// 47. Verify that the al test analyst user is able to see rejected phase task
-	// state as In Progress under Screening
-	// 48. Verify that the user is able to change the state as QC ready under
-	// Screening
-	// 49. Verify that the user is able to change the Next State as QC Task under
-	// Screening
-	// 50. Verify that the user is able to see QC Task has been Reopened Message
-	// 51. Verify that the al qc user is able to change state as QC Ready to In
-	// Progress under FRA
-	// 52. Verify that the user is able to select the FRA task as Rejected phase
-	// 53. Verify that the user is able to see FRA Task has been Reopened for QC
-	// rejection message
-	// 54. Verify that the al test analyst user is able to see rejected phase task
-	// state as In Progress under FRA
-	// 55. Verify that the user is able to click on Mark QC button under FRA Summary
-	// Creation
-	// 56. Verify that the user is able to see QC Task has been Reopened Messages
-	// 57. Verify that the user is able to change the Approval as 'Fail' under ID&V
-	// 58. Verify that the al qc user is able to change state as QC Ready to
-	// Complete under Screening
-	// 59. Verify that the al qc user is able to change state as QC Ready to
-	// Complete under FRA
-	// 60. Verify that the al qc user is approve the QC task
-	@Test(priority = 8, enabled = false, description = "QCScreeningAndFRARejectAndApprovePhase")
-	public void QCScreeningAndFRARejectAndApprovePhase() throws InterruptedException, IOException {
-		System.out.println("QCScreeningAndFRARejectAndApprovePhase::" + mainWindow);
-		QCTask qc = new QCTask(driver);
-		Actions action = new Actions(driver);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		driver.switchTo().newWindow(WindowType.WINDOW);
-		driver.manage().window().maximize();
-		driver.navigate().to(url);
-		System.out.println("new Window" + driver.getTitle());
-		Thread.sleep(2000);
-		Set<String> windowHandles = driver.getWindowHandles();
-		List<String> windowHandlesList = new ArrayList<>(windowHandles);
-		driver.switchTo().window(windowHandlesList.get(1));
-		driver.switchTo().frame("gsft_main");
-		qc.qcLogin();
-
-		/*
-		 * WebElement sort = driver.findElement(By.xpath(
-		 * "//table[@id='x_aukms_accenture_accenture_legal_core_table']//i[@aria-label='Customer KYC Number column options']"
-		 * )); sort.click(); WebElement za =
-		 * driver.findElement(By.xpath("/html/body/div[4]/div[4]"));
-		 * js.executeScript("arguments[0].click()", za);
-		 */
-
-		driver.findElement(By.xpath("/html/body/div[2]/div[1]/span[9]/span/span[2]")).click();
-		WebElement qcTask = driver.findElement(By.xpath("//div[9]//table/tbody/tr/td[3]/a[@class='linked formlink']"));
-		js.executeScript("arguments[0].click()", qcTask);
-		driver.findElement(By.xpath("//div[2]/div[1]/span[2]/span/span[2]")).click();
-		js.executeScript("window.scrollBy(0,1000)");
-		/*
-		 * WebElement sort = driver.findElement(By.xpath("\r\n" + "\r\n" +
-		 * "//th[@glide_field='x_aukms_accenture_screening_tasks.number']//i[@aria-label='Request Number column options']"
-		 * )); sort.click(); WebElement az =
-		 * driver.findElement(By.xpath("//div[normalize-space()='Sort (a to z)']"));
-		 * js.executeScript("arguments[0].click()", az);
-		 * System.out.println("Short Description::");
-		 */
-		driver.findElement(By.xpath("//div[2]/span/div[2]/div[4]//table/tbody/tr[2]/td[3]/a[@class='linked formlink']"))
-				.click();
-		Select state = new Select(
-				driver.findElement(By.xpath("//select[@name='x_aukms_accenture_screening_tasks.state']")));
-		System.out.println("State..." + state);
-		state.selectByVisibleText("In Progress");
-		driver.findElement(By.xpath("//button[@onclick='return gsftSubmit(this);']")).click();
-		qcTask = driver.findElement(By.xpath("//div[9]//table/tbody/tr/td[3]/a[@class='linked formlink']"));
-		js.executeScript("arguments[0].click()", qcTask);
-		Select rejectPhase = new Select(
-				driver.findElement(By.xpath("//select[@name='x_aukms_accenture_qc_task.rejection_task']")));
-		System.out.println("State..." + rejectPhase);
-		rejectPhase.selectByVisibleText("Screening Task");
-		driver.findElement(By.xpath("//button[@type='submit' and @id='reject_qc']")).click();
-		driver.switchTo().alert().accept();
-		WebElement Pop = driver.findElement(
-				By.xpath("//div[2]//*[contains(text(),'Screening Task has been Reopened for QC rejection')]"));
-		String qcMsg = Pop.getText();
-		String qcPop = "Screening Task has been Reopened for QC rejection";
-		assertEquals(qcPop, qcMsg);
-		driver.switchTo().window(windowHandlesList.get(0));
-		driver.switchTo().frame("gsft_main");
-		qc.ScreeningComplete();
-		driver.switchTo().window(windowHandlesList.get(1));
-		driver.switchTo().frame("gsft_main");
-		driver.findElement(By.xpath("/html/body/div[2]/div[1]/span[9]/span/span[2]")).click();
-		qcTask = driver.findElement(By.xpath("//div[9]//table/tbody/tr/td[3]/a[@class='linked formlink']"));
-		js.executeScript("arguments[0].click()", qcTask);
-		driver.findElement(By.xpath("//div[2]/div[1]/span[3]/span/span[2]")).click();
-		js.executeScript("window.scrollBy(0,1000)");
-		driver.findElement(By.xpath("//div[3]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]/a"))
-				.click();
-		state = new Select(
-				driver.findElement(By.xpath("//select[@name='x_aukms_accenture_fra_summary_creation.state']")));
-		System.out.println("State..." + state);
-		state.selectByVisibleText("In Progress");
-		driver.findElement(By.xpath("//button[@onclick='return gsftSubmit(this);']")).click();
-		qcTask = driver.findElement(By.xpath("//div[9]//table/tbody/tr/td[3]/a[@class='linked formlink']"));
-		js.executeScript("arguments[0].click()", qcTask);
-		rejectPhase = new Select(
-				driver.findElement(By.xpath("//select[@name='x_aukms_accenture_qc_task.rejection_task']")));
-		System.out.println("State..." + rejectPhase);
-		rejectPhase.selectByVisibleText("Summary Task");
-		driver.findElement(By.xpath("//button[@type='submit' and @id='reject_qc']")).click();
-		WebElement Pop1 = driver.findElement(
-				By.xpath("//div[2]//*[contains(text(),'Summary Task has been Reopened for QC rejection')]"));
-		String qcMsg1 = Pop1.getText();
-		String qcPop1 = "Summary Task has been Reopened for QC rejection";
-		assertEquals(qcPop1, qcMsg1);
-		driver.switchTo().alert().accept();
-		driver.switchTo().window(windowHandlesList.get(0));
-		driver.switchTo().frame("gsft_main");
-		qc.FRAComplete();
-		driver.switchTo().window(windowHandlesList.get(1));
-		driver.switchTo().frame("gsft_main");
-		qc.approveQCTasks();
-		driver.switchTo().window(windowHandlesList.get(0));
-		driver.navigate().refresh();
-	}
-
 	// 75. Verify that user is able to provide answer in the 'Answer' field
 
-	@Test(priority = 7, enabled = false, description = "SMEReview")
-	public void SMEReview() throws InterruptedException, IOException {
+	@Test(priority = 7, enabled = true, description = "SMEAndClientSponsorReview")
+	public void SMEAndClientSponsorReview() throws InterruptedException, IOException {
 		Actions action = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		PortalValidation portal = new PortalValidation(driver);
-		Set<String> windowHandles = driver.getWindowHandles();
-		List<String> windowHandlesList = new ArrayList<>(windowHandles);
 		driver.switchTo().newWindow(WindowType.WINDOW);
 		driver.manage().window().maximize();
 		driver.navigate().to(portalUrl);
+		Set<String> windowHandles = driver.getWindowHandles();
+		List<String> windowHandlesList = new ArrayList<>(windowHandles);
 		System.out.println("new Window" + driver.getTitle());
+		driver.switchTo().window(windowHandlesList.get(1));
 		portal.smeUserLogin();
-		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
-		WebElement pendingReview=driver.findElement(By.xpath("//div/div[3]/span/div/div/a/div[2]"));
-		pendingReview.click();
-		WebElement caseNumber=driver.findElement(By.xpath("//div[1]/div/div[4]/table/tbody/tr/td[2]/span"));
-		caseNumber.click();
-		//Tmrw 
-		WebElement pendingReviewButn=driver.findElement(By.xpath("//div/div/span[2]/div/div/div[1]/div[2]/button"));
-		pendingReviewButn.click();
-		
-		WebElement favorites = driver.findElement(By.xpath("//body/div[5]/div/div/nav/div/div[2]/div/div/a[2]"));
-		action.moveToElement(favorites).click().perform();
-		js.executeScript("window.scrollBy(0,1000)");
-		Thread.sleep(2000);
-		WebElement aLCore = driver
-				.findElement(By.xpath("//div/div/magellan-favorites-list/ul/li[4]/div/ul/li[1]/div/a/div[2]/div"));
-		action.doubleClick(aLCore).perform();
-		driver.switchTo().frame("gsft_main");
-		WebElement openMainTask = driver
-				.findElement(By.xpath("//div[1]/table[1]/tbody[1]/tr[1]//a[@class='linked formlink']"));
-		openMainTask.click();
-		driver.findElement(By.xpath("//div[2]/div[1]/span[10]/span/span[2]")).click();
-		WebElement task = driver.findElement(By.xpath("//div[10]/span/div[2]/div[4]//tr[1]/td[3]/a"));
-		action.doubleClick(task).perform();
-		WebElement answer = driver.findElement(By.xpath("//*[@id='x_aukms_accenture_sme_review.alc_answer']"));
-		answer.sendKeys("SME Review2");
-		WebElement summary = driver.findElement(By.xpath("//tr/td/div/table/tbody/tr/td[3]/a"));
-		String summaryTask = summary.getText();
-		System.out.println("summaryTask::" + summaryTask);
-		String actualSummary = "Summary Task Creation";
-		assertEquals(actualSummary, summaryTask);
-		WebElement submit = driver.findElement(By.xpath("//button[contains(text(),'Submit')]"));
-		js.executeScript("arguments[0].click()", submit);
+		portal.smePendingReview();
+		portal.calUserLogin();
+		portal.csPendingReview();
 		driver.close();
 		driver.switchTo().window(windowHandlesList.get(0));
 		driver.switchTo().frame("gsft_main");
-		driver.findElement(By.xpath("//div[2]/div[1]/span[10]/span/span[2]")).click();
-		driver.findElement(By.xpath("//div/div[10]/span/div[2]/div[3]/div[1]/span/button/b")).click();
-		/*
-		 * WebElement sort = driver.findElement(By.xpath(
-		 * "//div[10]/span/div[2]/div[4]/table//tr[1]/th[3]/span/i")); sort.click();
-		 * WebElement az =
-		 * driver.findElement(By.xpath("//div[normalize-space()='Sort (a to z)']"));
-		 * js.executeScript("arguments[0].click()", az);
-		 */
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		task = driver.findElement(
-				By.xpath("//div[2]/div/div[10]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr[2]/td[3]/a"));
-		js.executeScript("arguments[0].click()", task);
-		answer = driver.findElement(By.xpath("//*[@id='x_aukms_accenture_sme_review.alc_answer']"));
-		answer.sendKeys("SME Review1");
-		summary = driver.findElement(By.xpath("//tr/td/div/table/tbody/tr/td[3]/a"));
-		summaryTask = summary.getText();
-		System.out.println("summaryTask::" + summaryTask);
-		actualSummary = "Summary Task Creation";
-		assertEquals(actualSummary, summaryTask);
-		System.out.println("Before Sme Review");
-		submit = driver.findElement(By.xpath("//button[contains(text(),'Submit')]"));
-		js.executeScript("arguments[0].click()", submit);
-		System.out.println("Submit SME Review");
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		task = driver.findElement(
-				By.xpath("//div[2]/div/div[10]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr[1]/td[3]/a"));
-		js.executeScript("arguments[0].click()", task);
-		answer = driver.findElement(By.xpath("//*[@id='x_aukms_accenture_sme_review.alc_answer']"));
-		Assert.assertTrue(answer.getAttribute("readOnly").equals("true"), "Element ReadOnly");
-		WebElement updateButn = driver.findElement(By.xpath("//button[@onclick='return gsftSubmit(this);']"));
-		js.executeScript("arguments[0].click()", updateButn);
-
-		/*
-		 * WebElement sPop = driver.findElement(By.
-		 * xpath("//div//*[contains(text(),'FRA Task has been Reopened')]")); String pop
-		 * = sPop.getText(); String smePop = "FRA Task has been Reopened";
-		 * assertEquals(smePop, pop);
-		 */
 	}
 
-	@Test(priority = 10, enabled = false, description = "ClientSponsorReviewAndCompleteReopenedSummaryAndQCTask")
-	public void ClientSponsorReviewAndCompleteReopenedSummaryAndQCTask() throws InterruptedException, IOException {
+	@Test(priority = 8, enabled = true, description = "TPAEscalateAndTPASendToAMLCOAndCompleteReopenedSummaryAndQCTask")
+	public void TPAEscalateAndTPASendToAMLCOAndCompleteReopenedSummaryAndQCTask()
+			throws InterruptedException, IOException {
 		QCTask qc = new QCTask(driver);
 		ReviewTask review = new ReviewTask(driver);
 		Actions action = new Actions(driver);
+		PortalValidation portal = new PortalValidation(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//div[2]/div[1]/span[6]/span/span[2]")).click();
+		WebElement fraResult = driver
+				.findElement(By.xpath("//div/div[6]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr[2]/td[6]"));
+		String fra = fraResult.getText();
+		System.out.println("fra:::" + fra);
+		driver.findElement(By.xpath("//div[2]/div[1]/span[8]/span/span[2]")).click();
+		driver.findElement(By.xpath("//div/div[8]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[4]/a"))
+				.click();
+		WebElement escalateButn = driver.findElement(By.xpath("//button[contains(text(),'Escalate')]"));
+		escalateButn.click();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//div[2]/div[1]/span[7]/span/span[2]")).click();
+		driver.findElement(By.xpath("//div[7]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr[1]/td[3]/a"))
+				.click();
+		WebElement approveButn = driver.findElement(By.xpath("//button[contains(text(),'Approve')]"));
+		approveButn.click();
+		driver.findElement(By.xpath("//div[2]/div[1]/span[8]/span/span[2]")).click();
+		driver.findElement(By.xpath("//div/div[8]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[4]/a"))
+				.click();
+		Select dropDown = new Select(driver.findElement(By.xpath(
+				"//select[@name='x_aukms_accenture_tpa_review_form.is_the_prospective_client_a_sanctioned_entity']")));
+		dropDown.selectByVisibleText("No");
+		dropDown = new Select(driver.findElement(
+				By.xpath("//select[@name='x_aukms_accenture_tpa_review_form.are_the_prospective_client_s']")));
+		dropDown.selectByVisibleText("No");
+		WebElement sendToAmlcoButn = driver.findElement(By.xpath("//button[contains(text(),'Send to AML CO')]"));
+		sendToAmlcoButn.click();
 		driver.switchTo().newWindow(WindowType.WINDOW);
 		driver.manage().window().maximize();
-		driver.navigate().to(url);
-		System.out.println("new Window" + driver.getTitle());
+		driver.navigate().to(portalUrl);
 		Set<String> windowHandles = driver.getWindowHandles();
 		List<String> windowHandlesList = new ArrayList<>(windowHandles);
-		driver.switchTo().frame("gsft_main");
-		review.ClientSponsorLogin();
-		WebElement favorites = driver.findElement(By.xpath("//body/div[5]/div/div/nav/div/div[2]/div/div/a[2]"));
-		action.moveToElement(favorites).click().perform();
-		js.executeScript("window.scrollBy(0,1000)");
-		Thread.sleep(2000);
-		WebElement aLCore = driver
-				.findElement(By.xpath("//div/magellan-favorites-list/ul/li[4]/div/ul/li[1]/div/a/div[2]/div"));
-		action.doubleClick(aLCore).perform();
-		driver.switchTo().frame("gsft_main");
-		WebElement openMainTask = driver
-				.findElement(By.xpath("//div[1]/table[1]/tbody[1]/tr[1]//a[@class='linked formlink']"));
-		openMainTask.click();
-		driver.findElement(By.xpath("//div[2]/div[1]/span[11]/span/span[2]")).click();
-		js.executeScript("window.scrollBy(0,1000)");
-		WebElement task = driver.findElement(
-				By.xpath("//div[2]/div[2]/div/div[11]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]"));
-		action.doubleClick(task).perform();
-		System.out.println("Opened CS Review Task");
-		WebElement summary = driver.findElement(By.xpath("//tr/td/div/table/tbody/tr/td[3]/a"));
-		String summaryTask = summary.getText();
-		System.out.println("summaryTask::" + summaryTask);
-		String actualSummary = "Summary Task Creation";
-		assertEquals(actualSummary, summaryTask);
-		WebElement submit = driver.findElement(By.xpath("//button[contains(text(),'Submit')]"));
-		js.executeScript("arguments[0].click()", submit);
+		System.out.println("new Window" + driver.getTitle());
+		driver.switchTo().window(windowHandlesList.get(1));
+		portal.businessSponsorUserLogin();
+		portal.tpaReviewForm();
+		if (fra.equalsIgnoreCase("Medium")) {
+			WebElement comments = driver.findElement(By.xpath("//div/div/span/div/div[3]/div[1]/textarea"));
+			comments.sendKeys("TPA Reject");
+			WebElement reject = driver.findElement(By.xpath("//button[contains(text(),'Reject')]"));
+			js.executeScript("arguments[0].click()", reject);
+		} else {
+			WebElement comments = driver.findElement(By.xpath("//div/div/span/div/div[3]/div[1]/textarea"));
+			comments.sendKeys("TPA Approve");
+			WebElement approve = driver.findElement(By.xpath("//button[contains(text(),'Approve')]"));
+			js.executeScript("arguments[0].click()", approve);
+		}
+		driver.findElement(By.xpath("//div/div[1]/div/div/div/button/span/img")).click();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		WebElement user = driver.findElement(By.xpath("//div/nav/div[3]/ul[2]/li[1]/a/span[1]/div/div/div"));
+		js.executeScript("arguments[0].click()", user);
+		WebElement logout = driver.findElement(By.xpath("//nav/div[3]/ul[2]/li[1]/ul/li[2]/a/span"));
+		js.executeScript("arguments[0].click()", logout);
 		driver.close();
 		driver.switchTo().window(windowHandlesList.get(0));
 		driver.switchTo().frame("gsft_main");
 		qc.FRAComplete();
+		
 		driver.switchTo().newWindow(WindowType.WINDOW);
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
 		System.out.println("new Window" + driver.getTitle());
+		windowHandles = driver.getWindowHandles();
+		windowHandlesList = new ArrayList<>(windowHandles);
+		driver.switchTo().window(windowHandlesList.get(1));
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.switchTo().frame("gsft_main");
 		qc.qcLogin();
-		qc.approveQCTasks();
-		driver.switchTo().window(windowHandlesList.get(0));
+		driver.findElement(By.xpath("/html/body/div[2]/div[1]/span[11]/span/span[2]")).click();
+		WebElement qcTask = driver
+				.findElement(By.xpath("//div/div[11]/span/div[2]/div[4]/table/tbody/tr/td/div/table/tbody/tr/td[3]/a"));
+		js.executeScript("arguments[0].click()", qcTask);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		qc.approveReopenedQCTasks();
+
 	}
 
 	@Test(priority = 11, enabled = false, description = "TeamLeadUpdate")

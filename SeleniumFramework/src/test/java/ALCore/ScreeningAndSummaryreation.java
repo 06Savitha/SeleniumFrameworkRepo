@@ -23,7 +23,7 @@ import org.testng.Assert;
 
 import config.PropertiesFile;
 
-public class ScreeningAndSummaryreation extends CaseCreation {
+public class ScreeningAndSummaryreation extends AccentureLegalCore {
 	public ScreeningAndSummaryreation(WebDriver driver) {
 		this.driver = driver;
 	}

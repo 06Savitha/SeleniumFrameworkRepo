@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import config.PropertiesFile;
 
-public class ReviewTask extends CaseCreation {
+public class ReviewTask extends AccentureLegalCore {
 
 	public ReviewTask(WebDriver driver) {
 		this.driver = driver;

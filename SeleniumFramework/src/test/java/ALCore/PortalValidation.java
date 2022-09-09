@@ -36,8 +36,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
-public class PortalValidation extends CaseCreation {
+public class PortalValidation extends AccentureLegalCore {
 
 	public PortalValidation(WebDriver driver) {
 		this.driver = driver;
@@ -57,14 +58,29 @@ public class PortalValidation extends CaseCreation {
 		WebElement login = driver.findElement(By.xpath("//form/div/div[2]/button"));
 		login.click();
 	}
+
 	public void smeUserLogin() throws InterruptedException, IOException {
 		WebElement userNameS = driver.findElement(By.xpath("//input[@name='username']"));
 		System.out.println("find element");
 		FileInputStream in = new FileInputStream(Projectpath + "\\src\\test\\java\\config\\config.properties");
 		prop.load(in);
-		usernameC = prop.getProperty("userNameS");
+		usernameS = prop.getProperty("userNameS");
 		System.out.println("userNameS..." + usernameS);
 		userNameS.sendKeys(usernameS);
+		password = prop.getProperty("password");
+		WebElement pwd = driver.findElement(By.id("password"));
+		pwd.sendKeys(password);
+		WebElement login = driver.findElement(By.xpath("//form/div/div[2]/button"));
+		login.click();
+	}
+	public void businessSponsorUserLogin() throws InterruptedException, IOException {
+		WebElement userNameB = driver.findElement(By.xpath("//input[@name='username']"));
+		System.out.println("find element");
+		FileInputStream in = new FileInputStream(Projectpath + "\\src\\test\\java\\config\\config.properties");
+		prop.load(in);
+		usernameB = prop.getProperty("userNameB");
+		System.out.println("userNameB..." + usernameB);
+		userNameB.sendKeys(usernameB);
 		password = prop.getProperty("password");
 		WebElement pwd = driver.findElement(By.id("password"));
 		pwd.sendKeys(password);
@@ -93,7 +109,6 @@ public class PortalValidation extends CaseCreation {
 		js.executeScript("arguments[0].click()", assignButn);
 		WebElement initateKycButn = driver.findElement(By.xpath("//span[2]/div/div[1]/div/div[2]/button[1]"));
 		initateKycButn.click();
-		
 
 		try {
 			Thread.sleep(60000);
@@ -110,16 +125,16 @@ public class PortalValidation extends CaseCreation {
 		String actualCount = count.getText();
 		if (actualCount.equalsIgnoreCase("1")) {
 			System.out.println("after wait::");
-				js.executeScript("window.scrollBy(0,1000)");
-				WebElement selection = driver.findElement(By.xpath("//div[6]/table/tbody/tr[2]/td[1]/input"));
-				js.executeScript("arguments[0].click()", selection);
-				WebElement comments = driver.findElement(By.xpath("//div/span/div/div/div[7]/div/textarea"));
-				comments.sendKeys("Success Discrepancy Comments");
-				WebElement continueButn = driver.findElement(By.xpath("//div/span/div/div/div[8]/button"));
-				js.executeScript("arguments[0].click()", continueButn);
-				js.executeScript("window.scrollBy(0,1000)");
-				initiateKYCForm();
-			
+			js.executeScript("window.scrollBy(0,1000)");
+			WebElement selection = driver.findElement(By.xpath("//div[6]/table/tbody/tr[2]/td[1]/input"));
+			js.executeScript("arguments[0].click()", selection);
+			WebElement comments = driver.findElement(By.xpath("//div/span/div/div/div[7]/div/textarea"));
+			comments.sendKeys("Success Discrepancy Comments");
+			WebElement continueButn = driver.findElement(By.xpath("//div/span/div/div/div[8]/button"));
+			js.executeScript("arguments[0].click()", continueButn);
+			js.executeScript("window.scrollBy(0,1000)");
+			initiateKYCForm();
+
 		} else {
 			js.executeScript("window.scrollBy(0,1000)");
 			WebElement comments = driver.findElement(By.xpath("//div/span/div/div/div[7]/div/textarea"));
@@ -132,20 +147,22 @@ public class PortalValidation extends CaseCreation {
 			initiateKYCForm();
 		}
 	}
+
 	public void requestTPA() throws InterruptedException {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		WebElement initatekyc = driver
 				.findElement(By.xpath("//div[3]/div/sp-page-row[1]/div/div[1]/span/div/div/a/div[2]"));
 		js.executeScript("arguments[0].click()", initatekyc);
-		WebElement myCases=driver.findElement(By.xpath("//div[1]/div/sp-page-row/div/div/span[3]/div/div/form/div[1]/ul/li[1]/a"));
+		WebElement myCases = driver
+				.findElement(By.xpath("//div[1]/div/sp-page-row/div/div/span[3]/div/div/form/div[1]/ul/li[1]/a"));
 		myCases.click();
 		WebElement kycNumber = driver.findElement(By.xpath("//div/div[1]/table/tbody/tr[1]/td[2]/span"));
 		kycNumber.click();
-		WebElement requestTPAButn=driver.findElement(By.xpath("//span[2]/div/div/div[1]/div[2]/button[1]"));
+		WebElement requestTPAButn = driver.findElement(By.xpath("//span[2]/div/div/div[1]/div[2]/button[1]"));
 		requestTPAButn.click();
-		WebElement checkBox=driver.findElement(By.xpath("//div/div/div[3]/div/div[1]/span/input"));
+		WebElement checkBox = driver.findElement(By.xpath("//div/div/div[3]/div/div[1]/span/input"));
 		checkBox.click();
-		WebElement submit=driver.findElement(By.xpath("//span/div/div/div[3]/div/div[3]/button"));
+		WebElement submit = driver.findElement(By.xpath("//span/div/div/div[3]/div/div[3]/button"));
 		submit.click();
 		alertMethod();
 	}
@@ -214,7 +231,8 @@ public class PortalValidation extends CaseCreation {
 			dropDownList.selectByIndex(1);
 		}
 
-		Select clientPrincipleCountry = new Select(driver.findElement(By.xpath("//select[@name='client_principle_country']")));
+		Select clientPrincipleCountry = new Select(
+				driver.findElement(By.xpath("//select[@name='client_principle_country']")));
 		clientPrincipleCountry.selectByVisibleText("No");
 
 		Select clientCriminal = new Select(driver.findElement(By.xpath("//select[@name='client_crimina']")));
@@ -314,16 +332,97 @@ public class PortalValidation extends CaseCreation {
 		}
 	}
 
+	public void smePendingReview() throws InterruptedException, IOException {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		WebElement pendingReview = driver.findElement(By.xpath("//div/sp-page-row[6]/div/div/span/div/div/a/div[2]"));
+		pendingReview.click();
+		WebElement caseNumber = driver
+				.findElement(By.xpath("//div/div/form/div[1]/div/div[2]/table/tbody/tr/td[2]/span"));
+		caseNumber.click();
+
+		/*
+		 * WebElement requestExtension =
+		 * driver.findElement(By.xpath("//button[contains(text(),'Request Extension')]")
+		 * ); js.executeScript("arguments[0].click()", requestExtension);
+		 * driver.findElement(By.xpath("//div/div[3]/div/div/div/button/span/img")).
+		 * click(); driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		 */
+		
+		WebElement riskMitigation = driver.findElement(By
+				.xpath("/html/body/div/section/main/div[3]/div/sp-page-row/div/div/span/div/div[1]/div[5]/div[1]/p/a"));
+		riskMitigation.click();
+		js.executeScript("window.scrollBy(0,1000)");
+		WebElement mitigationPlan = driver.findElement(By.xpath("//div[2]/div/div/div/table/tbody/tr[2]/td/div/input"));
+		js.executeScript("arguments[0].click()", mitigationPlan);
+		mitigationPlan = driver.findElement(By.xpath("//div[2]/div/div/div/table/tbody/tr[3]/td/div/input"));
+		js.executeScript("arguments[0].click()", mitigationPlan);
+		WebElement submit = driver.findElement(By.xpath("//div/div[2]/div/div/div/div[2]/button"));
+		submit.click();
+		Thread.sleep(5000);
+		js.executeScript("window.scrollBy(0,1000)");
+		WebElement dueDate = driver.findElement(By.xpath("//div/span/div/div[1]/div[1]/div[1]/p[1]"));
+		String Date = dueDate.getText();
+		System.out.println("Date::" + Date);
+		WebElement comment = driver.findElement(By.xpath("//div/span/div/div[1]/div[4]/textarea"));
+		comment.sendKeys("sme review");
+		submit = driver.findElement(By.xpath("//button[contains(text(),'Submit')]"));
+		submit.click();
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//div/span/div/div[2]/div/div/div/button/span/img")).click();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+		WebElement user = driver.findElement(By.xpath("//div/nav/div[3]/ul[2]/li[1]/a/span[1]/div/div/div"));
+		js.executeScript("arguments[0].click()", user);
+		WebElement logout = driver.findElement(By.xpath("//nav/div[3]/ul[2]/li[1]/ul/li[2]/a/span"));
+		js.executeScript("arguments[0].click()", logout);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+	}
+
+	public void csPendingReview() throws InterruptedException, IOException {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		WebElement pendingReview = driver.findElement(By.xpath("//div/div[3]/span/div/div/a/div[2]"));
+		pendingReview.click();
+		WebElement caseNumber = driver.findElement(By.xpath("//div[1]/div/div[4]/table/tbody/tr[1]/td[2]/span"));
+		caseNumber.click();
+		WebElement reviewButn = driver.findElement(By.xpath("//div/span[4]/div/div/div[1]/div[2]/button"));
+		reviewButn.click();
+		WebElement comment = driver.findElement(By.xpath("//div[3]/div/sp-page-row/div/div/span/div/div[2]/textarea"));
+		comment.sendKeys("CS Review");
+		WebElement submit = driver.findElement(By.xpath("//button[contains(text(),'Submit')]"));
+		submit.click();
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//div/div/div/button/span/img")).click();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		WebElement user = driver.findElement(By.xpath("//div/nav/div[3]/ul[2]/li[1]/a/span[1]/div/div/div"));
+		js.executeScript("arguments[0].click()", user);
+		WebElement logout = driver.findElement(By.xpath("//nav/div[3]/ul[2]/li[1]/ul/li[2]/a/span"));
+		js.executeScript("arguments[0].click()", logout);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+	
+	public void tpaReviewForm() throws InterruptedException, IOException {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		WebElement tpaApprovalCard=driver.findElement(By.xpath("//div/div[2]/span/div/div/a/div[2]"));
+		tpaApprovalCard.click();
+		WebElement tpaNumber=driver.findElement(By.xpath("//div[1]/div/div[3]/table/tbody/tr[1]/td[2]/span"));
+		tpaNumber.click();
+		js.executeScript("window.scrollBy(0,1000)");
+	}
+	
+
 	public void alertMethod() throws InterruptedException {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 2);
 			wait.until(ExpectedConditions.alertIsPresent());
 			Alert alert = driver.switchTo().alert();
-			System.out.println("alert::"+alert.getText());
+			System.out.println("alert::" + alert.getText());
 			alert.accept();
 			Assert.assertTrue(alert.getText().contains("OK"));
 		} catch (Exception e) {
 			// exception handling
 		}
-}
+	}
 }

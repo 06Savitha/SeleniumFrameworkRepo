@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
-import ALCore.CaseCreation;
+import ALCore.AccentureLegalCore;
 
 public class PropertiesFile {
 	static String contractingDetails;
@@ -37,8 +37,8 @@ public class PropertiesFile {
 			prop.load(in);
 			prop.getProperty("browser");
 			System.out.println("browser....::" + prop.getProperty("browser"));
-			CaseCreation.browserName = prop.getProperty("browser");
-			System.out.println("CaseCreation.browserName "+CaseCreation.browserName );
+			AccentureLegalCore.browserName = prop.getProperty("browser");
+			System.out.println("CaseCreation.browserName "+AccentureLegalCore.browserName );
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

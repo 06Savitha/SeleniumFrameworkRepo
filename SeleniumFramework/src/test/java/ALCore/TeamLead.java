@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import config.PropertiesFile;
 
-public class TeamLead extends CaseCreation {
+public class TeamLead extends AccentureLegalCore {
 
 	public TeamLead(WebDriver driver) {
 		this.driver = driver;
